@@ -14,12 +14,11 @@ public class User {
         this.task = new ArrayList();
     }
 
-    public int getID(){
+
+    public int getId(){
         return this.id;
     }
-    public String getName(){
-        return this.name;
-    }
+
     public void addTask(Task task) {
         this.task.add(task);
     }

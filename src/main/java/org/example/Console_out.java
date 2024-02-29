@@ -2,31 +2,34 @@ package org.example;
 
 import java.util.ArrayList;
 
-import static org.example.Main.user_list;
-
 public class Console_out {
 
     public static void all_user_and_task(){
-            for (User user : user_list) {
+            for (User user : Manager.return_user_list()) {
                 System.out.println(user);
                 user.getTaskList().stream().forEach(System.out::println);
             }
     }
     public static void all_user_and_task(int user_id){
-        System.out.println(user_list.get(user_id - 1));
-        user_list.get(user_id - 1).getTaskList().stream().forEach(System.out::println);
+        System.out.println(Manager.return_user_list().get(user_id - 1));
+        Manager.return_user_list()
+                .get(user_id - 1)
+                .getTaskList().stream()
+                .forEach(System.out::println);
     }
     public static void all_user_and_task(int user_id, Status status){
-        System.out.println(user_list.get(user_id - 1));
-        user_list.get(user_id - 1)
+        System.out.println(Manager.return_user_list().get(user_id - 1));
+        Manager.return_user_list()
+                .get(user_id - 1)
                 .getTaskList().stream()
                 .filter(task -> task.getStatus() == status)
                 .forEach(System.out::println);
     }
 
     public static void all_user_and_task(int user_id, int id_task){
-        System.out.println(user_list.get(user_id - 1));
-        user_list.get(user_id - 1)
+        System.out.println(Manager.return_user_list().get(user_id - 1));
+        Manager.return_user_list()
+                .get(user_id - 1)
                 .getTaskList().stream()
                 .filter(task -> task.getId() == id_task)
                 .forEach(System.out::println);
@@ -44,7 +47,7 @@ public class Console_out {
 
     public static void available_user(){
         System.out.println("Введите id нужного пользоватлея ");
-        user_list.stream().forEach(System.out::println);
+        Manager.return_user_list().stream().forEach(System.out::println);
         System.out.println("back - Возрат в основное меню");
         System.out.println("----------------------------------------------");
     }

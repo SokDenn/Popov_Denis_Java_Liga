@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import static org.example.Main.manager;
-import static org.example.Main.user_list;
 
 public class Сonsole_interface {
     public static void start(){
@@ -40,7 +38,7 @@ public class Сonsole_interface {
                 if (action.equalsIgnoreCase("back")) return;
 
                 int user_id = Integer.parseInt(action);
-                user = user_list.get(user_id - 1);
+                user = Manager.return_user_list().get(user_id - 1);
 
                 if (user.getTaskList().size() == 0) {
                     System.out.println("Задач у пользоватлея нет");
@@ -54,7 +52,7 @@ public class Сonsole_interface {
     }
 
     private static void user_task_editor(User user, BufferedReader buf) {
-        Console_out.all_user_and_task(user.getID());
+        Console_out.all_user_and_task(user.getId());
 
         String action = "";
         try {
@@ -70,18 +68,18 @@ public class Сonsole_interface {
                             if (status != null) {
                                 task.setStatus(status);
                                 System.out.println("Статус задачи успешно изменен!");
-                                Console_out.all_user_and_task(user.getID(), task.getId());
+                                Console_out.all_user_and_task(user.getId(), task.getId());
                             }
                         }
                     }
 
                     case "2" -> {
                         Status status = selection_status(buf);
-                        if (status != null) Console_out.all_user_and_task(user.getID(), status);
+                        if (status != null) Console_out.all_user_and_task(user.getId(), status);
                     }
 
                     case "3" -> {
-                        Console_out.all_user_and_task(user.getID());
+                        Console_out.all_user_and_task(user.getId());
                     }
 
                     case "back" -> System.out.println("Возрат к выбору пользотвалея");
@@ -112,7 +110,7 @@ public class Сonsole_interface {
     }
 
     private static Task selection_task(User user, BufferedReader buf) {
-        Console_out.available_task(user.getID());
+        Console_out.available_task(user.getId());
 
         while (true) {
             try {

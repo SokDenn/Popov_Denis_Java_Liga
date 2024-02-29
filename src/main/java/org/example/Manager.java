@@ -1,37 +1,33 @@
 package org.example;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Manager {
-    private static Manager instance;
-    private Set<Integer> userId = new HashSet();
-    private Set<Integer> taskId = new HashSet();
-    private Manager() {}
-    public static Manager getInstance() {
+    private static ArrayList<User> user_list = new ArrayList<>();
+    private static ArrayList<Task> task_list = new ArrayList<>();
 
-        if (instance == null) {
-            instance = new Manager();
-        }
-        return instance;
-    }
-
-    public User createUser(int id, String name) {
-        if (userId.contains(id)) {
+    public static void createUser(int id, String name) {
+        if (findUserById(id)) {
             throw new IllegalArgumentException("ID пользоватлей должны быть уникальными");
         } else {
             User user = new User(id, name);
-            userId.add(id);
-            return user;
+            user_list.add(user);
         }
     }
-    public  Task add_task(int id, String heading, String description, Integer id_user, LocalDate date_of_completion) {
-        if (userId.contains(id_user)) {
-            if(!taskId.contains(id)){
+
+    public static void add_task(int id, String heading, String description, Integer id_user, LocalDate date_of_completion) {
+        if (findUserById(id_user)) {
+            if(!findTaskById(id)){
                 Task task = new Task(id, heading, description, date_of_completion);
-                taskId.add(id);
-                return task;
+                task_list.add(task);
+                user_list.stream()
+                        .filter(user -> user.getId() == id_user)
+                        .findFirst().orElse(null)
+                        .addTask(task);
+
             } else{
                 throw new IllegalArgumentException("Задача с таким ID уже есть");
             }
@@ -39,6 +35,26 @@ public class Manager {
             throw new IllegalArgumentException("Задача назначается на несуществующий ID пользователя");
         }
 
+    }
+
+    public static ArrayList<User> return_user_list(){
+        return user_list;
+    }
+
+    public static Boolean findUserById(int id) {
+        for (User user : user_list) {
+            if (user.getId() == id) {
+                return true;
+            }
+        } return false;
+    }
+
+    public static Boolean findTaskById(int id) {
+        for (Task task : task_list) {
+            if (task.getId() == id) {
+                return true;
+            }
+        } return false;
     }
 
 }
