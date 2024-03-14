@@ -1,4 +1,6 @@
-package org.example;
+package org.example.model;
+
+import org.example.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,12 @@ public class User {
         return this.task;
     }
 
+    public void clearTasks() {
+        task.clear();
+    }
+    public String get_full_info_str() {
+        return this.id + "," + this.name + "\n";
+    }
     @Override
     public String toString() {
         return "id: " + this.id + ", name: " + this.name;

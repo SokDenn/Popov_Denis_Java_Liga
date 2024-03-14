@@ -1,20 +1,25 @@
-package org.example;
+package org.example.model;
+
+import org.example.model.Status;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     private int id;
     private String heading;
     private String description;
+    private int user_id;
     private LocalDate date_of_completion;
     private Status status;
 
-    public Task(int id, String heading, String description, LocalDate data) {
+    public Task(int id, String heading, String description, LocalDate data, int user_id, Status status) {
         this.id = id;
         this.heading = heading;
         this.description = description;
+        this.user_id = user_id;
         this.date_of_completion = data;
-        this.status = Status.NEW;
+        this.status = status;
     }
 
     public int getId() {
@@ -25,6 +30,12 @@ public class Task {
     }
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String get_full_info_str() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return this.id + "," + this.heading + "," + this.description + "," + this.user_id + ","
+                + this.date_of_completion.format(formatter) + "," + status + "\n";
     }
 
     @Override
